@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "solinda_cost_sheet",
+    'name': "Cost Sheet",
 
     'summary': """
         Short (1 phrase/line) summary of the module's purpose, used as
@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','project','sale_project','sale_crm','purchase_requisition'],
+    'depends': ['base','project','sale_project','sale_crm','purchase_requisition','report_xlsx','purchase'],
 
     # always loaded
     'data': [
@@ -34,6 +34,7 @@
         'views/sale_order_views.xml',
         'views/approval_views.xml',
         'views/sequence_data.xml',
+        'views/purchase_order_views.xml',
         'report/action_report.xml',
         'report/rab_report_template.xml',
         'views/menuitem_views.xml',

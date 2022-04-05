@@ -73,12 +73,11 @@ class CostSheet(models.Model):
             if this.margin_type == 'percentage':
  
                 total = sum(this.line_ids.mapped('price_subtotal'))
-                total_without_margin = sum(this.line_ids.mapped('price_unit'))
-                total_margin = sum(this.line_ids.mapped('margin'))
+                total_without_margin = sum(this.line_ids.mapped('price_subtotal'))
+                total_margin = this.margin_percent_input * total_without_margin
             else:
-
                 total = sum(this.line_ids.mapped('price_subtotal')) + this.margin_amount_input
-                total_without_margin = sum(this.line_ids.mapped('price_unit'))
+                total_without_margin = sum(this.line_ids.mapped('price_subtotal'))
                 total_margin = this.margin_amount_input
                 
             this.total_amount = total
@@ -254,6 +253,7 @@ class ProjectRab(models.Model):
     margin_percent = fields.Float(string='Margin Percent',compute='_compute_price')
     price_subtotal = fields.Float(compute='_compute_price', string='Subtotal')
     
+    price_final = fields.Float('Price Final')    
     
     def create_requisition(self):
         request = self.env['purchase.requisition'].create({

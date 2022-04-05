@@ -69,6 +69,7 @@
                                         <field name="item_factor" optional="hide" />
                                         <field name="lab_factor" optional="hide" />
                                         <field name="price_unit" />
+                                        <field name="price_final" />
                                         <field name="margin_percent" readonly="1" invisible="1" widget="percentage" optional="hide"/>
                                         <field name="margin" invisible="1" optional="hide" />
                                         <field name="start_date" optional="hide" />
