@@ -7,3 +7,4 @@ class PurchaseOrderLine(models.Model):
     top = fields.Char('Terms Of Payment')
     delivery_time = fields.Char('Delivery Time')    
     notes = fields.Text('Notes')    
+    price = fields.Float('Price/Frangko')

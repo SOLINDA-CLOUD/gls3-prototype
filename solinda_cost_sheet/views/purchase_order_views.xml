@@ -10,6 +10,7 @@
                 <field name="top" />
                 <field name="delivery_time" />
                 <field name="notes" />
+                <field name="price" />
             </xpath>
 
         </field>
