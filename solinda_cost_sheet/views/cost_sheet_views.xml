@@ -43,7 +43,7 @@
                         <group col="4">
                             <field name="crm_id" required="1" />
                             <field name="partner_id" />
-                            <field name="rab_template_id" />
+                            <!-- <field name="rab_template_id" /> -->
                             <field name="date_document" />
                             <field name="tax_id" options="{'no_create':True,'no_quick_create':True}" />
                             <!-- <field name="tax_ids" widget="many2many_tags" /> -->
@@ -100,7 +100,7 @@
                                         <field name="financial_cost" string="Financial Cost" />
                                         <field name="bank_guarantee" />
                                         <field name="contigency" />
-                                        <field name="waranty" />
+                                        <field name="waranty" invisible="1" />
                                     </group>
                                     <group col="1" string="Proportional %">
 
@@ -110,7 +110,7 @@
                                         <field name="financial_cost_percent" widget="percentage" nolabel="1"/>
                                         <field name="bank_guarantee_percent" widget="percentage" nolabel="1"/>
                                         <field name="contigency_percent" widget="percentage" nolabel="1"/>
-                                        <field name="waranty_percent" widget="percentage" nolabel="1"/>
+                                        <field name="waranty_percent" widget="percentage" nolabel="1" invisible="1"/>
                                     </group>
 
                                 </group>
@@ -349,7 +349,7 @@
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Waranty">
+                            <page string="Waranty" invisible="1">
                                 <field name="waranty_line_ids" widget="section_and_note_one2many">
                                     <tree editable="bottom">
                                         <control>
