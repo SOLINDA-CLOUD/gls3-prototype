@@ -13,8 +13,8 @@
                 </field> -->
 
                 <xpath expr="//field[@name='line_ids']/tree/field[@name='price_unit']" position="before">
-                    <field name="top" optional="show" />
-                    <field name="delivery_time" optional="show" />
+                    <field name="top" optional="show" string="ToP" />
+                    <field name="delivery_time" optional="show" string="Del.Time" />
                     <field name="notes" optional="show" />
                 </xpath>
 

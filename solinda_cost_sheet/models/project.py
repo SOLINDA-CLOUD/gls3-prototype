@@ -32,14 +32,9 @@ class ProjectProject(models.Model):
                     'product_id': data.product_id.id,
                     'product_qty': data.product_qty,
                     'uom_id': data.uom_id.id,
-                    'vol_factor': data.vol_factor,
-                    'item_factor': data.item_factor,
-                    'lab_factor': data.lab_factor,
-                    'start_date': data.start_date,
-                    'end_date': data.end_date,
-                    'no_pos': data.no_pos,
-                    'price_unit': data.price_unit,
-                }) for data in self.rab_id.line_ids]
+                    'rab_price': data.commercial_price,
+                    'price_unit': data.commercial_price,
+                }) for data in self.rab_id.rab_line_ids]
 
         })
         

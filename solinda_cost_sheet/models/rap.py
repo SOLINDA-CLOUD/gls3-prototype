@@ -189,6 +189,7 @@ class ProjectRab(models.Model):
     item_factor = fields.Float('Item Factor')
     lab_factor = fields.Float('Lab Factor')
     price_unit = fields.Float('Price')
+    rab_price = fields.Float('RAB Price')
     start_date = fields.Date('Start Date')
     end_date = fields.Date('Finish Date')
     no_pos = fields.Char('No')

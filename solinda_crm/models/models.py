@@ -73,7 +73,7 @@ class CrmLead(models.Model):
     # Description of the Area
     description_area = fields.Html('Description of the Area')
     is_attachment = fields.Boolean('Drawings available?')
-    attachment_area = fields.Binary('Attachment')
+    attachment_area = fields.Binary('Attachment Area')
 
     # Additional Remarks or Documentations (Pictures, Sketches)
 

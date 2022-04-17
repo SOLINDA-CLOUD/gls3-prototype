@@ -17,3 +17,4 @@ class PurchaseRequisitionLine(models.Model):
     top = fields.Char('Terms Of Payment')
     delivery_time = fields.Char('Delivery Time')    
     notes = fields.Text('Notes')
+    customs = fields.Float('Customs')
