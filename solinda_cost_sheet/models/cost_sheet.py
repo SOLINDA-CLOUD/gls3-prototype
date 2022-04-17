@@ -174,7 +174,7 @@ class CostSheet(models.Model):
             total_cost = this.offer_margin + this.sales
             round_up = float_round(total_cost,precision_digits=-6,rounding_method='UP') if total_cost > 0 else 0.0
             final_profit = round_up - this.project_value
-            final_profit_percent = final_profit/round_up
+            final_profit_percent = final_profit/round_up if this.projact_value >0 and round_up >0 else 0.0
             taxes = round_up * (this.tax_id.amount/100)
             total_amount = round_up + taxes
             
