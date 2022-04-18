@@ -290,10 +290,10 @@ class CostSheet(models.Model):
     @api.model
     def create(self, vals):
         res = super(CostSheet, self).create(vals)
-        if "Rev. " not in res.name:
-            res.name = self.env["ir.sequence"].next_by_code("cost.sheet.seq")
-        else:
-            return res
+        # if "Rev. " not in res.name:
+        res.name = self.env["ir.sequence"].next_by_code("cost.sheet.seq")
+        # else:
+        #     return res
         res.crm_id.rab_id = res.id
         return res 
     
