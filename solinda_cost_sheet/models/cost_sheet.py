@@ -68,6 +68,7 @@ class CostSheet(models.Model):
     
     
     currency_id = fields.Many2one('res.currency', string='currency',default=lambda self:self.env.company.currency_id.id)
+    total_non_project = fields.Float(compute='_compute_non_project', string='Project Non Project',store=True)
     project_value = fields.Float(compute='_compute_project_value', string='Project Value',store=True)
     profit = fields.Float('Profit',compute="_compute_profit",store=True)
     sales = fields.Float('Sales',compute="_compute_profit",store=True)
@@ -100,6 +101,11 @@ class CostSheet(models.Model):
         
     
     
+    @api.depends('ga_project','project_hse','car','financial_cost','bank_guarantee','contigency','waranty')
+    def _compute_non_project(self):
+        for this in self:
+            this.total_non_project = sum([this.ga_project,this.project_hse,this.car,this.financial_cost,this.bank_guarantee,this.contigency,this.waranty])
+            
     @api.depends('rab_line_ids','ga_project','project_hse','car','financial_cost','bank_guarantee','contigency','waranty')
     def _compute_project_value(self):
         for this in self:
@@ -343,7 +349,8 @@ class RabLine(models.Model):
     uom_id = fields.Many2one('uom.uom', string='UoM')
     price_unit = fields.Float(compute='_compute_amount', string='Price',store=True)
     propotional_percent = fields.Float(compute='_compute_amount_propotional', string='Propotional %',store=False)
-    suggested_proposional_percent = fields.Float(compute='_compute_amount', string='Sug. Commercial Price',store=True)
+    suggested_proposional = fields.Float(compute='_compute_sug_price', string='Sug. Commercial Price',store=True)
+    # suggested_proposional_percent = fields.Float(compute='_compute_amount', string='Sug. Commercial Price',store=True)
     input_manual = fields.Boolean('Adjust Manual')
     commercial_price  = fields.Float('Final Price',compute="_compute_final_price",inverse="_inverse_final_price")
     commercial_price_percentage = fields.Float('Final %')
@@ -351,6 +358,13 @@ class RabLine(models.Model):
     # total_amount = fields.Float('Total Amount',compute="_compute_final_price",store=True)
        
     
+    @api.depends('price_unit','propotional_percent','cost_sheet_id.final_profit','cost_sheet_id.total_non_project')
+    def _compute_sug_price(self):
+        for this in self:
+            this.suggested_proposional = this.price_unit + this.propotional_percent * (this.cost_sheet_id.final_profit + this.cost_sheet_id.total_non_project)
+            
+            
+            
     @api.depends('cost_sheet_id.total_cost_round_up','input_manual','price_unit','commercial_price_percentage')
     def _compute_final_price(self):
         for this in self:
@@ -473,7 +487,7 @@ class RabLine(models.Model):
             #     amount = sum([(i.product_qty * i.rfq_price) for i in this.cost_sheet_id.waranty_line_ids])
                 
             this.price_unit = amount
-            this.suggested_proposional_percent = sugg_pro_percent
+            # this.suggested_proposional_percent = (amount + this.propotional_percent)
     
     # @api.depends('price_unit','product_id')
     def _compute_amount_propotional(self):

@@ -82,7 +82,7 @@
                                         <field name="uom_id" domain="[('category_id', '=', product_uom_category_id)]" />
                                         <field name="price_unit" sum="Price Unit" />
                                         <field name="propotional_percent" widget="percentage" sum="Proportional Percent"/>
-                                        <field name="suggested_proposional_percent" widget="percentage" sum="Suggestion Proportional Percent" />
+                                        <field name="suggested_proposional" sum="Suggestion Proportional Percent" />
                                         <field name="input_manual" optional="hide" />
                                         <field name="commercial_price_percentage" widget="percentage" sum="Commercial Price Percent" />
                                         <field name="commercial_price" sum="Commercial Price" />
@@ -119,6 +119,7 @@
                                         <field name="note" nolabel="1" placeholder="Terms and conditions..."/>
                                     </group>
                                     <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                        <field name="total_non_project" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                         <field name="project_value" widget="monetary" options="{'currency_field': 'currency_id'}"/>
                                         <field name="profit_percent" widget="percentage" />
                                         <field name="profit" />
