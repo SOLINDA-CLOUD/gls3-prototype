@@ -362,8 +362,6 @@ class RabLine(models.Model):
                 if this.input_manual:
                     percent = sum(this.cost_sheet_id.rab_line_ids.mapped('commercial_price_percentage')) - this.commercial_price_percentage
                     diff_percent = 1 - percent if percent < 1 else percent-1
-                    print("====================== PERCENT",percent)
-                    print("====================== DIFFF PERCENT",diff_percent)
                     # this.commercial_price = 0.0
                     # this.commercial_price_percentage = 0.0
                     # total_input_amount = this.cost_sheet_id.total_cost_round_up - sum(this.cost_sheet_id.rab_line_ids.mapped('commercial_price')) - this.commercial_price
@@ -393,8 +391,6 @@ class RabLine(models.Model):
             if this.input_manual:
                 percent = sum(this.cost_sheet_id.rab_line_ids.mapped('commercial_price_percentage')) - this.commercial_price_percentage
                 diff_percent = 1 - percent if percent < 1 else percent-1
-                print("====================== PERCENT",percent)
-                print("====================== DIFFF PERCENT",diff_percent)
                 # this.commercial_price = 0.0
                 # this.commercial_price_percentage = 0.0
                 # total_input_amount = this.cost_sheet_id.total_cost_round_up - sum(this.cost_sheet_id.rab_line_ids.mapped('commercial_price')) - this.commercial_price
@@ -1035,6 +1031,53 @@ class ElectricalPackage(models.Model):
             total = this.product_qty * this.rfq_price
             this.total_price = total
 
+class CivilWork(models.Model):
+    _name = 'civil.work'
+    _description = 'Civil Work'
+    
+    
+    cost_sheet_id = fields.Many2one('cost.sheet', string='Cost Sheet')
+    display_type = fields.Selection([
+        ('line_section', "Section"),
+        ('line_note', "Note")], default=False, help="Technical field for UX purpose.")
+    sequence = fields.Integer('Sequence')
+    product_id = fields.Many2one('product.product', string='Product')
+    partner_id = fields.Many2one('res.partner', related='cost_sheet_id.partner_id', string='Partner', readonly=True, store=True)
+    product_uom_category_id = fields.Many2one(related='product_id.uom_id.category_id', readonly=True)
+    name = fields.Char('Description')
+    note = fields.Char('Remarks')
+    product_qty = fields.Float('Quantity',default=1.0)
+    uom_id = fields.Many2one('uom.uom', string='UoM')
+    existing_price = fields.Float('Existing Price')
+    rfq_price = fields.Float('RFQ Price')
+    total_price = fields.Float(compute='_compute_total_price', string='Total Price')
+    rab_line_id = fields.Many2one('rab.line', string='RAB Line',ondelete="cascade")
+
+    @api.onchange('product_id')
+    def _onchange_product_id(self):
+        if not self.product_id:
+            return
+
+        self.uom_id = self.product_id.uom_po_id or self.product_id.uom_id
+        product_lang = self.product_id.with_context(
+            lang=get_lang(self.env, self.partner_id.lang).code,
+            partner_id=self.partner_id.id,
+            company_id=self.env.company.id,
+        )
+        name = product_lang.display_name
+        if product_lang.description_purchase:
+            name += '\n' + product_lang.description_purchase
+        self.name = name
+        
+        self.rfq_price = self.product_id.list_price
+    
+    @api.depends('product_qty','rfq_price')
+    def _compute_total_price(self):
+        for this in self:
+            total = 0.0
+            total = this.product_qty * this.rfq_price
+            this.total_price = total
+    
 class AutomaticScreenPackage(models.Model):
     _name = 'automatic.screen.package'
     _description = 'Automatic Screen Package'
