@@ -49,7 +49,7 @@
                             <!-- <field name="tax_ids" widget="many2many_tags" /> -->
                             <!-- <field name="margin_type" widget="radio" options="{'horizontal':true}" /> -->
                             <field name="user_id" readonly="1" />
-                            <field name="rev" />
+                            <field name="rev" invisible="1" />
                             <field name="currency_id" invisible="1" />
                         </group>
                         <!-- <group>

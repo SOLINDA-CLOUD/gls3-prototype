@@ -63,7 +63,7 @@
                             <field name="attachment_area" widget="image" attrs="{'invisible':[('is_attachment','=',False)]}" nolabel="1" colspan="4"/>
                         </group>
                     </page>
-                    <page string="Description of the Area">
+                    <page string="Additional Remarks or Documentations (Pictures, Sketches)">
                         <group string="Additional Remarks or Documentations (Pictures, Sketches)">
                             <field name="description_remarks" nolabel="1" colspan="4"/>
                             <field name="attachment_remarks" />

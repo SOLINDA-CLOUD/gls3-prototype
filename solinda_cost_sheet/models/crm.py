@@ -11,14 +11,20 @@ class WastewaterType(models.Model):
     _name = 'wastewater.type'
     _description = 'Type Wastewater for Tertiary Treatment'
     
-    name = fields.Char('name')
+    name = fields.Char('Name')
 
 class TransportSurvey(models.Model):
     _name = 'transport.survey'
     _description = 'Transport Survey'
     
-    name = fields.Char('name')
+    name = fields.Char('Name')
+    
+class PlantType(models.Model):
+    _name = 'plant.type'
+    _description = 'Plant Type'
+    
 
+    name = fields.Char('Name')
 class CrmLead(models.Model):
     _inherit = 'crm.lead'
 
@@ -31,6 +37,15 @@ class CrmLead(models.Model):
         ('rab', 'RAB')
     ], string='Crm Type')
     business_type_id = fields.Many2one('business.type', string='Business Type')
+    project_name = fields.Char('Project Name')
+    country_id = fields.Many2one('res.country', string='Location (Country)')
+    plant_type_id = fields.Many2one('plant.type', string='Plant Type')
+    plant_start_date = fields.Date('Plant Start Date')
+    
+    new_installation = fields.Boolean('New Installation')
+    
+    
+    
     ground_water = fields.Boolean('Ground Water')
     surface_water = fields.Selection([
         ('river', 'River'),
